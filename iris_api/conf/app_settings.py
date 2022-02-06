@@ -13,3 +13,4 @@ TRAINED_MODELS_DIR = API_ROOT / 'trained_models'
 class AppSettings(BaseSettings):
     training_data_file: str = "train.csv"
     test_data_path: str = "test.csv"
+    api_version = "v1"

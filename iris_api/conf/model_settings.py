@@ -26,3 +26,4 @@ class ModelTrainingSettings(BaseSettings):
     gamma: float = 1.3381078668366866
     subsample: float = 0.38674136078825716
     objective: str = "multi:softprob"
+    version: str = "1"

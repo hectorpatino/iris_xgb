@@ -6,7 +6,7 @@ from fastapi import APIRouter
 from feature_engine.creation import MathematicalCombination
 from sklearn.metrics import accuracy_score
 from sklearn.pipeline import Pipeline
-from iris_api.conf import model_training_settings, app_settings, DATASETS_DIR, TRAINED_MODELS_DIR
+from iris_api.conf import model_training_settings, app_settings, DATASETS_DIR, TRAINED_MODELS_DIR, full_pipe_line
 from pathlib import Path
 
 
@@ -35,7 +35,7 @@ def load_dataset(file_name: str) -> pd.DataFrame:
 
 
 @train_router.get("/train")
-async def train_model():
+def train_model():
     data = load_dataset(app_settings.training_data_file)
     iris_pipeline = Pipeline(
         [
@@ -60,10 +60,8 @@ async def train_model():
         ]
     )
     iris_pipeline.fit(data.drop(model_training_settings.target, axis=1), data[model_training_settings.target])
-    version = 1
-    full_version = f"{model_training_settings.pipeline_save_file}{version}"
-    pipeline_location = TRAINED_MODELS_DIR / full_version
-    joblib.dump(pipeline_location, pipeline_location)
+    pipeline_location = TRAINED_MODELS_DIR / full_pipe_line
+    joblib.dump(iris_pipeline, pipeline_location)
     return {"message": f"Model trained and saved to {pipeline_location}"}
 
 
