@@ -14,3 +14,4 @@ class AppSettings(BaseSettings):
     training_data_file: str = "train.csv"
     test_data_path: str = "test.csv"
     api_version = "v1"
+    name = "iris_xgboost_api"
